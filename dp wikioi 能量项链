@@ -1,0 +1,24 @@
+#include<iostream>
+#include<cstdio>
+using namespace std;
+int ans=-1,n,dp[210][210],a[210];
+int main(){ 
+	scanf("%d",&n);
+	for(int i=1;i<=n;++i){
+		scanf("%d",&a[i]);
+		a[i+n]=a[i];
+	}
+	for(int j=2;j<=n+n;++j){
+		for(int i=j-1;i&&j-i<n;--i){
+			int max=-1;
+			for(int k=i;k<j;++k){
+				int tmp=dp[i][k]+dp[k+1][j]+a[i]*a[k+1]*a[j+1];
+				if(max<tmp) max=tmp;
+			}
+			dp[i][j]=max;
+			if(ans<dp[i][j]) ans=dp[i][j];
+		}
+	}
+	printf("%d\n",ans);
+	return 0;
+}
