@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+struct mat{
+	int mm[3][3];
+}; 
+
+mat e_e(mat a,mat e,int n,int A,int B)
+{
+	mat c;
+	for(int i=0;i<n;++i)
+		for(int j=0;j<n;++j)
+		{
+			c.mm[i][j]=0;
+			for(int k=0;k<n;++k)
+			{
+				c.mm[i][j]=c.mm[i][j]+a.mm[i][k]*e.mm[k][j];
+				if(c.mm[i][j]>6) c.mm[i][j]=c.mm[i][j]%7;
+			}
+		}
+	return c;
+}
+
+int e_fun_e(int A,int B,int q)
+{
+	mat a,e; 
+	a.mm[0][1]=a.mm[1][0]=0;
+	a.mm[1][1]=a.mm[0][0]=1;
+	
+	e.mm[0][0]=A;e.mm[0][1]=B;
+	e.mm[1][0]=1;e.mm[1][1]=0;
+	
+	while(q){   
+		if(q&1) a=e_e(a,e,2,A,B);
+		e=e_e(e,e,2,A,B);
+		q>>=1;
+	}
+	return (a.mm[0][0]+a.mm[0][1])%7;	
+} 
+// f[0] = 0 ; f[1] = 1 ; f[2] = 2 ; f[3] = 3 ;
+int main()
+{
+	int a,b,n;
+	while(cin>>a>>b>>n&&a!=0){
+		if(n==1||n==2) cout<<1<<endl;
+		else cout<<e_fun_e(a,b,n-2)<<endl;
+	}
+	return 0;	
+}
+
+
