@@ -1,0 +1,36 @@
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include<iostream>
+using namespace std;
+int a[120][120],in[120],n,ans;
+
+int main(){
+	cin>>n;
+	int Min=100010,miny=0,minx=0;
+	for(int i=0;i<n;++i)
+		for(int j=0;j<n;++j){
+			scanf("%d",&a[i][j]);
+			if(a[i][j]&&a[i][j]<Min) {Min=a[i][j];minx=i;miny=j;}	
+	}
+	in[minx]=in[miny]=1;
+	ans+=a[minx][miny]; 
+	for(int i=0;i<n-2;++i){ 
+		Min=100010;	
+		for(int i=0;i<n;++i){
+			for(int j=i+1;j<n;++j){			
+				if(a[i][j]==0) continue;
+				int f=in[i]+in[j];
+				if(f==1&&a[i][j]<Min) {
+					minx=i;miny=j;
+					Min=a[i][j];
+				}		
+			}
+		}
+		in[minx]=in[miny]=1;
+		ans+=a[minx][miny];
+	
+	}
+	cout<<ans<<endl;
+	return 0;
+}
