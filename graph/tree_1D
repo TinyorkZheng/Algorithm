@@ -1,0 +1,28 @@
+#include<iostream>
+#include<cmath>
+#include<vector>
+using namespace std;
+
+int n;
+int v[3010];
+
+void printTree(int l,int r)
+{
+// cout << "printTree() : " << l <<  " " << r << endl;
+	if(l<0||l>r) return;
+	int mid = l;
+	while(v[mid]<v[r]) mid++;
+	printTree(mid,r-1);
+	printTree(l,mid-1);
+	cout << v[r] << endl;
+
+}
+
+int main()
+{
+	cin >> n;
+        for(int i=0;i<n;++i) cin >> v[i];
+	printTree(0,n-1);
+	return  0;
+}
+
