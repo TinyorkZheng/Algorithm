@@ -1,0 +1,54 @@
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#include <cstdio>
+using namespace std;
+
+struct Node{
+	int index,dry;
+	Node():index(0),dry(0){}
+	Node(int i,int d):index(i),dry(d){};
+	bool operator <(const Node& a) const{
+        if(dry!=a.dry) return dry<a.dry ;
+		return index<a.index;
+    }  
+};
+int N;
+long long di[100010][2];
+vector<Node> a;
+ 
+int main()
+{
+	cin >> N;
+	int tx;
+	for (int i = 0; i < N; ++ i){
+		cin >> tx;
+		a.push_back( Node(i,tx) );
+	}
+	sort(a.begin(),a.end());
+	
+	int r=0,l=0,i=0;
+	int prel,prer;
+	int dryx = a[l].dry;
+	while(dryx==a[r+1].dry) r++; // same dry of 0
+	di[0][1] = a[r].index + (r+1); // dist between 0,rightmost index point
+	di[0][0] = di[0][1] + a[r].index - a[l].index; // go and back
+	
+	while (r+1<N)
+	{
+		prel = l; prer = r;
+		l = prer + 1; r = l;
+		dryx = a[r].dry;
+		i ++; 
+		while (dryx==a[r+1].dry) r ++;
+		di[i][0] = min(di[i-1][0]+abs(a[prel].index-a[r].index),
+						di[i-1][1]+abs(a[prer].index-a[r].index)) + a[r].index-a[l].index + r+1 -l;
+		di[i][1] = min(di[i-1][0] + abs(a[prel].index-a[l].index),
+						di[i-1][1] + abs(a[prer].index-a[l].index)) + a[r].index-a[l].index + r+1 -l;
+		
+	}
+	cout << min(di[i][0],di[i][1]) << endl;
+                  
+}
