@@ -1,3 +1,10 @@
+/* Nontrivial Numbers */
+// maxinum prime
+// result is odd
+// for even , one of its divisors is N/2,result larger than 1/2
+// to find a (sum)/N , larger N is better
+// if N is even , then (N/2+...)/N > 1/2 
+
 #include <iostream>
 #include <cstdio>
 #include <cstring>
@@ -5,12 +12,6 @@
 #include <vector>
 using namespace std;
 int I,J;
-
-// maxinum prime
-// result is odd
-// for even , one of its divisors is N/2,result larger than 1/2
-// to find a (sum)/N , larger N is better
-// if N is even , then (N/2+...)/N > 1/2 
 
 int cal()
 {
