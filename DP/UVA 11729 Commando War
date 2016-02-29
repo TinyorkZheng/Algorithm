@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstdio> 
+#include <cstdlib>
+#include <cstring>
+#include <string> 
+#include <vector> 
+#include <algorithm>
+using namespace std;
+const int N = 4005; 
+const int INF = 10000000; 
+const int maxn = 1010;
+
+struct NODE{
+    int B,J;
+    bool operator < (const NODE &s) const { return J > s.J; }
+};
+
+int main()
+{
+    int n,cnt = 1;
+    while(cin>>n && n){
+		vector<NODE> s(n);
+        for(int i=0; i<n; i++)
+            cin>>s[i].B>>s[i].J;
+
+        sort(s.begin(),s.end());
+
+        int tsum=0, sum=0;
+        for(int i=0; i<n; i++){
+            tsum += s[i].B;
+            sum = max(tsum+s[i].J, sum);
+        }
+        cout<<"Case "<< cnt++ <<": "<<sum<<endl;
+    }
+    return 0;
+}
