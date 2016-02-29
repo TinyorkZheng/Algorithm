@@ -1,0 +1,32 @@
+// Longest Ordered Subsequence
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+using namespace std;
+ 
+int num[1010];
+int dp[1010];
+
+int main()
+{
+	int n;
+	memset(dp,sizeof(dp),0);
+	
+	cin >> n ;
+	 for (int i=0; i<n; ++i)
+		cin >> num[i];
+
+	dp[0] = 1;
+	for (int i=1; i<n; ++i){
+		dp[i] = 0;
+		for (int pre=i-1; pre>=0; --pre)
+			if(num[pre]<num[i] && dp[pre]>dp[i]) dp[i] = dp[pre];
+		dp[i] += 1;
+//	cout << "dp["<<i<<"]=" <<dp[i] << endl; 
+	} 
+	int maxNum = 1;
+	for(int i=0;i<n;++i)
+	    if(maxNum<dp[i]) maxNum=dp[i];
+	cout << maxNum << endl;  
+	return 0;
+}
