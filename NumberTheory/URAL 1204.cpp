@@ -1,3 +1,10 @@
+/* Idempotents */
+/* n*n=k(pq)+n
+     n(n-1) = 0 (mod pq)
+   get n|q&&(n-1)|p or n|p&&(n-1)|q 
+     so n=px,n-1=qy or n=qx,n-1=py
+     that is 1=px+qy or 1=qx+py
+*/
 #include <iostream>
 #include <cstdio>
 #include <cstring>
@@ -5,12 +12,6 @@
 #include <vector>
 using namespace std;
 const int N = 40000;
-/* n*n=k(pq)+n
-     n(n-1) = 0 (mod pq)
-   get n|q&&(n-1)|p or n|p&&(n-1)|q 
-     so n=px,n-1=qy or n=qx,n-1=py
-     that is 1=px+qy or 1=qx+py
-*/
 
 vector<int> prime;
 vector<bool> isprime(N,true);
