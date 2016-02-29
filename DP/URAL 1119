@@ -1,0 +1,41 @@
+// Metro
+// DP (0,0)->(n,m) 最短路径 无坑点
+
+#include<iostream>
+#include<cmath>
+#include<vector>
+using namespace std;
+
+int main()
+{
+	int n,m,k; // n is col and m is row
+	cin >> n >> m >> k;
+
+	vector<vector<bool> > has(m+1,vector<bool>(n+1));
+	for (int i=0; i<k; ++i){
+		int r,c;
+		cin >> c >> r; // (x.y)
+		has[r][c] = 1;
+	}	
+	vector<double> d(n+1,0.0);
+	for (int i=0; i<=n; ++i) d[i]=(double)i;
+
+	for (int r=1; r<=m; ++r) {// row
+		// start at [r,0]->[r+1,0]
+/*
+cout << r << " : ";
+for(int i=0;i<=n;++i) cout << d[i] <<" ";
+cout << endl;	
+*/
+		double NOupdate = d[0];
+		d[0] += 1.0; 
+		for (int c=1; c<=n; ++c){
+			double save = d[c];
+			if(has[r][c]) d[c]=NOupdate+sqrt(2);
+			else d[c]=min(d[c-1],d[c])+1;
+			NOupdate = save;
+		}
+	}
+	cout << (int)(d[n]*100+0.5) << endl;
+	return 0;
+}
