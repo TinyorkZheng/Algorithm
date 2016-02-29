@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+#include <cstring>
+#include <string>
+using namespace std;
+
+#define MAXN 1<<11+1 
+char pixel[MAXN][MAXN];
+
+void set_pixel(int y, int x, int n)
+{
+    if (n == 1)
+    {
+        pixel[y][x] = '/';
+        pixel[y][x+1] = '_';
+        pixel[y][x+2] = '_';
+        pixel[y][x+3] = '\\';
+        pixel[y-1][x+1] = '/';
+        pixel[y-1][x+2] = '\\'; 
+    }
+    else  
+    {
+        int d = 1<<n; 
+        set_pixel(y, x, n-1);
+        set_pixel(y, x+d, n-1);
+        set_pixel(y-d/2, x+d/2, n-1);
+    }
+}
+int main()
+{
+    int x, y, last, range, n;
+    while (scanf("%d", &n), n)
+    {
+        memset(pixel, 0, sizeof(pixel));
+        range = 1<<(n+1);
+        set_pixel(range>>1, 0, n);  
+        for (y = 1; y <= range>>1; ++y)
+        {
+            for (x = 0; x < range; ++x)
+                if (pixel[y][x])
+                    last = x;
+            for (x = 0; x < last; ++x)
+                if (!pixel[y][x])
+                    pixel[y][x] = ' ';
+            pixel[y][last+1] = '\0';
+        }
+        for (y = 1; y <= range>>1; ++y)
+            printf("%s\n", pixel[y]);
+        cout << endl;
+    }
+    return 0;
+}
