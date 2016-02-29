@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cstdio> 
+#include <cstdlib>
+#include <cstring>
+#include <string> 
+#include <vector> 
+#include <algorithm>
+using namespace std;
+const int N = 4005; 
+const int INF = 10000000; 
+const int maxn = 1010;
+
+int main()
+{
+ while(1){
+    int m,n;
+    cin >> n >> m;
+	vector<int> a(maxn,0); 	
+	vector<vector<bool> > f(maxn+1,vector<bool>(maxn+1,0));
+	int tmp;
+	for(int i=0;i<m;++i){ 
+	    cin >> tmp; 
+		a[tmp]++;
+	}
+	// init 
+	if(a[0]==1) f[0][0]=0,f[0][1]=1;
+    if(a[0]==0) f[0][0]=1,f[0][1]=0; // 有可用的 
+    // 递推 
+	for(int i=1;i<=n;++i){
+        if(a[i]==2){
+	        f[i][0]=0;          // 全都用完了 
+            f[i][1]=f[i-1][0];  // 上一个有没有用完  
+		}
+        if(a[i]==1){
+		    f[i][0] = f[i-1][0]; // i可以被i和i-1用，i-1没有了,i这次用掉了，所以没有了 
+      		f[i][1] = f[i-1][0]||f[i-1][1]; // 用剩下一张 
+	    }
+        if(a[i]==0){
+            f[i][0] = f[i-1][1] || f[i-1][0];
+            f[i][1] = f[i-1][1] || f[i-1][0]; 
+	    }
+    }
+    // n只能用一次，只有一张牌n有num(n) 
+    if(f[n][0]==1) cout << "YES" <<endl;
+	else cout << "NO" << endl;
+}
+	return 0;
+}
+
+/*
+
+
+*/ 
