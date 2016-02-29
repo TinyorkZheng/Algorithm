@@ -1,0 +1,28 @@
+/*
+1 在最左边，相邻相差<=2，求排列总数 
+1是固定的 
+ 1 | 2   [3-n]   = 2 [2-(n-1)] = dp[n-1]
+ 1 | 3 24[5-n]   = 32[2-(n-3)] = dp[n-3]
+ 1 | 3 579-864 2 = first inc 2 then dec 2 ->　only one case 
+
+　init : dp[1]=1; dp[2]=1;[3]=(2!)=2  
+*/
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+int dp[56]={[0]=0,[1]=1,[2]=1,[3]=2};
+ 
+int main(){
+	int n;
+	for(int i=4; i<56; ++i)
+		dp[i] = 1+dp[i-1]+dp[i-3];	
+	while(cin >> n && n){
+		cout << dp[n] << endl; 
+	}
+	
+	return 0;
+} 
